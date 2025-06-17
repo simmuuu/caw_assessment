@@ -7,7 +7,7 @@
     "install:client": "cd client && npm install",
     "build:client": "cd client && npm run build",
     "build:server": "cd server && npm run build",
-    "build": "npm run build:client && npm run build:server && cp -r client/dist server/dist/public",
+    "build": "cd client && CI=false npm run build && cd ../server && npm run build && cp -r client/dist server/dist/public",
     "start": "cd server && node dist/server.js"
   },
   "workspaces": [
