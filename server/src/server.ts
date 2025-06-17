@@ -29,6 +29,11 @@ const loginSchema = z.object({
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from React build
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'public')));
+}
+
 let db: Database<sqlite3.Database, sqlite3.Statement>;
 const initDatabase = async () => {
   try {
@@ -249,10 +254,17 @@ app.get('/expenses/analytics', authenticate, async (req: Request, res: Response)
 // Apply error handling middleware
 app.use(errorHandler);
 
-// 404 handler
-app.all('*', (req: Request, res: Response) => {
-  res.status(404).json({ error: 'Route not found' });
-});
+// Serve React app for all non-API routes in production
+if (process.env.NODE_ENV === 'production') {
+  app.get('*', (req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  });
+} else {
+  // 404 handler for development
+  app.all('*', (req: Request, res: Response) => {
+    res.status(404).json({ error: 'Route not found' });
+  });
+}
 
 // Graceful shutdown
 process.on('SIGTERM', async () => {
