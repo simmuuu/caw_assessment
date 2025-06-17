@@ -1,17 +1,17 @@
 [phases.setup]
-nixPkgs = ['nodejs', 'pnpm']
+nixPkgs = ['nodejs', 'npm']
 
 [phases.install]
 cmds = [
-  'pnpm install --frozen-lockfile',
-  'cd server && pnpm install --frozen-lockfile',
-  'cd client && pnpm install --frozen-lockfile'
+  'npm install',
+  'cd server && npm install',
+  'cd client && npm install'
 ]
 
 [phases.build]
 cmds = [
-  'cd server && pnpm run build',
-  'cd client && pnpm run build',
+  'cd server && npm run build',
+  'cd client && npm run build',
   'cp -r client/dist server/dist/public'
 ]
 
