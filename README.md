@@ -2,6 +2,14 @@
 
 A full-stack expense tracking application built with React and Node.js.
 
+## demo
+
+![Demo Video](./video.mp4)
+
+## db
+
+![db img](./db.png)
+
 ## 🚀 Features
 
 - **User Authentication** - Register/Login with JWT tokens
